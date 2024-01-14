@@ -1,3 +1,5 @@
+//I disclose ChatGPT was used in script.js
+
 // Array to store button objects
 let arrayButtons = [];
 
@@ -46,7 +48,7 @@ function createButtons(count) {
 
 // Function to move buttons randomly on the screen
 function moveButtonsRandomly() {
-  arrayButtons.forEach((button) => button.btn.disabled = true);
+  arrayButtons.forEach((button) => (button.btn.disabled = true));
 
   // Set timeout to delay the movement
   setTimeout(() => {
@@ -59,8 +61,16 @@ function moveButtonsRandomly() {
       } else {
         arrayButtons.forEach((button) => {
           button.hideNumber();
+
+          // Get new coordinates
           let newX = getRandomCoordinate(window.innerWidth - 100);
           let newY = getRandomCoordinate(window.innerHeight - 50);
+
+          // Check and adjust coordinates to stay within window boundaries
+          newX = Math.max(0, Math.min(newX, window.innerWidth - 100));
+          newY = Math.max(0, Math.min(newY, window.innerHeight - 50));
+
+          // Update button position
           button.btn.style.top = `${newY}px`;
           button.btn.style.left = `${newX}px`;
         });
