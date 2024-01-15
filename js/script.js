@@ -16,11 +16,14 @@ class Button {
   // Method to create a button element
   createButton(color) {
     let button = document.createElement("button");
+    // Set button styles
     button.style.backgroundColor = color;
     button.style.width = "10em";
     button.style.height = "5em";
     button.style.position = "absolute";
+    // Add the button to the container in the HTML
     document.getElementById("buttonContainer").appendChild(button);
+    // Set initial position based on order
     button.style.top = "50px";
     button.style.left = `${(parseInt(this.order) - 1) * 150}px`;
     return button;
@@ -40,15 +43,16 @@ class Button {
 // Function to create buttons with unique colors
 function createButtons(count) {
   for (let i = 0; i < count; i++) {
+    // Create a new button with a unique color and order
     let newButton = new Button(getUniqueColor(), i + 1);
-    newButton.showNumber();
+    newButton.showNumber(); // Show initial numbers on buttons
     arrayButtons.push(newButton);
   }
 }
 
 // Function to move buttons randomly on the screen
 function moveButtonsRandomly() {
-  arrayButtons.forEach((button) => (button.btn.disabled = true));
+  arrayButtons.forEach((button) => (button.btn.disabled = true)); // Disable buttons during movement
 
   // Set timeout to delay the movement
   setTimeout(() => {
@@ -56,13 +60,13 @@ function moveButtonsRandomly() {
     let interval = setInterval(() => {
       if (movesCounter >= 3) {
         clearInterval(interval);
-        enableButtons();
-        startMemoryTest();
+        enableButtons(); // Enable buttons after movement
+        startMemoryTest(); // Start memory test
       } else {
         arrayButtons.forEach((button) => {
           button.hideNumber();
 
-          // Get new coordinates
+          // Get new random coordinates within window boundaries
           let newX = getRandomCoordinate(window.innerWidth - 100);
           let newY = getRandomCoordinate(window.innerHeight - 50);
 
@@ -87,7 +91,7 @@ function getRandomCoordinate(limit) {
 
 // Function to enable buttons after movement
 function enableButtons() {
-  arrayButtons.forEach((button) => button.btn.disabled = false);
+  arrayButtons.forEach((button) => (button.btn.disabled = false));
 }
 
 // Function to start memory test and handle button clicks
@@ -103,15 +107,15 @@ function startMemoryTest() {
       if (clickedButton && button.order === clickedButton.order) {
         button.showNumber();
         if (orderCopy.length === 0) {
-          displayMessage(userMessages.correctOrder);
+          displayMessage(userMessages.correctOrder); // Display message for correct order
           disableButtons();
           arrayButtons = [];
           gameInProgress = false;
           arrayButtons.forEach((button) => button.btn.removeEventListener("click", clickHandler));
         }
       } else {
-        displayMessage(userMessages.incorrectOrder);
-        showCorrectOrder();
+        displayMessage(userMessages.incorrectOrder); // Display message for incorrect order
+        showCorrectOrder(); // Show correct order
         disableButtons();
         arrayButtons.forEach((button) => button.showNumber());
         gameInProgress = false;
@@ -123,7 +127,7 @@ function startMemoryTest() {
 
 // Function to disable buttons
 function disableButtons() {
-  arrayButtons.forEach((button) => button.btn.disabled = true);
+  arrayButtons.forEach((button) => (button.btn.disabled = true));
 }
 
 // Function to get a unique color for buttons
@@ -151,6 +155,6 @@ document.getElementById("startButton").addEventListener("click", () => {
     createButtons(count);
     moveButtonsRandomly();
   } else {
-    displayMessage(userMessages.invalidInput);
+    displayMessage(userMessages.invalidInput); // Display message for invalid input
   }
 });
